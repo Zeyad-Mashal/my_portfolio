@@ -40,7 +40,7 @@ export const ProjectList = [
     img: "/p-p.png",
     title: "Practice Papers",
     description:
-      "An app to detect if a job posting is a scam or not using its description.",
+      "An educational platform for british school with dynamic courses, scientific keyboard and notpad for write the steps of solving questions.",
     tech_stack: ["React.js", "NodeJs", "MongoDB"],
     github_url: "",
     demo_url: "https://practice-papers.com",

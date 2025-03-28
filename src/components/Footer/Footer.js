@@ -8,6 +8,7 @@ const FooterSection = styled.div`
   width: 100%;
   height: 250px;
   position: relative;
+  font-size: 0.8rem;
 
   span {
     position: absolute;
@@ -22,7 +23,8 @@ const FooterSection = styled.div`
 function Footer() {
   return (
     <FooterSection>
-      <div className="Container"/>
+      <div className="Container">All Rights Reserved to || Zeyad Mashaal 2025.</div>
+
     </FooterSection>
   );
 }
