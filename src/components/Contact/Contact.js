@@ -1,12 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ContactWrapper, Email, ContactForm } from "./ContactElements";
 import { MdContentCopy } from "react-icons/md";
 import { IconButton, Tooltip } from "@mui/material";
 import Zoom from '@mui/material/Zoom';
+import { FaCheck } from "react-icons/fa";
 
 import ScrollAnimation from "react-animate-on-scroll";
 function Contact() {
   const [showTooltip, setShowTooltip] = useState(false);
+  const [contactUs, setContactUs] = useState([]);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [message, setMessage] = useState("");
   const copyToClipboard = () => {
     navigator.clipboard.writeText("zyadomar112@gmail.com");
     setShowTooltip(true);
@@ -14,6 +20,55 @@ function Contact() {
       setShowTooltip(false);
     }, 700);
   };
+
+  useEffect(() => {
+    fetch("https://portfolio-backend-steel-zeta.vercel.app/getContact", {
+      method: "GET",
+      headers: {
+        "Content-type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setContactUs(data);
+        console.log(data);
+      })
+      .catch((error) => console.log(error));
+  }, []);
+
+  const addContactAPI = () => {
+    const data = {
+      name: name,
+      email: email,
+      phone: phone,
+      message: message,
+    };
+
+    fetch("https://portfolio-backend-steel-zeta.vercel.app/addContact", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        setContactUs([...contactUs, data]);
+        setName("");
+        setEmail("");
+        setPhone("");
+        setMessage("");
+        setTimeout(() => {
+          document.getElementById("contactDone").style.display = "flex";
+
+          setTimeout(() => {
+            document.getElementById("contactDone").style.display = "none";
+          }, 3000);
+        }, 3000);
+      })
+      .catch((error) => console.log(error));
+  }
 
   return (
     <ContactWrapper id="contact">
@@ -57,7 +112,7 @@ function Contact() {
         <ScrollAnimation animateIn="fadeIn" >
           <div className="BigCard">
             <Email>
-              <div style={{ display: 'flex', alignItems: 'center', flexDirection: "column", columnGap: '20px', rowGap: '10px', flexWrap: 'wrap', justifyContent: 'center' }} >
+              <div style={{ position: "relative", display: 'flex', alignItems: 'center', flexDirection: "column", columnGap: '20px', rowGap: '10px', flexWrap: 'wrap', justifyContent: 'center' }} >
                 <span>Or Contact me here!</span>
                 <div className="contactForm">
                   <style>
@@ -69,6 +124,7 @@ function Contact() {
                         justify-content: center;
                         row-gap: 1rem;
                         width: 450px;
+                        
                         
                       }
                       input,
@@ -107,23 +163,38 @@ function Contact() {
                         }
                     `}
                   </style>
-                  <input placeholder="UserName" />
-                  <input placeholder="Phone Number" />
-                  <textarea placeholder="Your Message" />
+                  <input placeholder="UserName" value={name} onChange={(e) => setName(e.target.value)} />
+                  <input placeholder="Phone Number" value={phone} onChange={(e) => setPhone(e.target.value)} />
+                  <input placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                  <textarea placeholder="Your Message" value={message} onChange={(e) => setMessage(e.target.value)} />
                 </div>
               </div>
-              <a
+              <button
                 className="btn PrimaryBtn btn-shadow"
-                href="mailto:zyadomar112@gmail.com"
-                target="_blank"
-                rel="noopener noreferrer"
+                onClick={addContactAPI}
               >
-                Send Email
-              </a>
+                Submit
+              </button>
             </Email>
           </div>
         </ScrollAnimation>
-
+        <div id="contactDone" style={{ width: "300px", display: 'none', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', rowGap: '10px', position: "fixed", top: "40%", right: "40%", zIndex: "10", background: "#fff", padding: "1rem", borderRadius: "16px", boxShadow: "5px 10px 10px 5px #eee" }} >
+          <FaCheck style={{ color: "green", fontSize: "3rem", background: "#90EE90", padding: "10px", borderRadius: "50%" }} />
+          <h1>I Recevied Your Contact, Thanks</h1>
+          <p>I Hope You A Good Day.</p>
+        </div>
+        {/* {
+          contactUs.map((item, index) => {
+            return (
+              <div key={index} className="BigCard">
+                <h1>{item.name}</h1>
+                <p>{item.email}</p>
+                <p>{item.phone}</p>
+                <p>{item.message}</p>
+              </div>
+            )
+          })
+        } */}
       </div>
     </ContactWrapper>
   );
