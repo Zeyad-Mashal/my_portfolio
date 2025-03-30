@@ -4,8 +4,8 @@ import { MdContentCopy } from "react-icons/md";
 import { IconButton, Tooltip } from "@mui/material";
 import Zoom from '@mui/material/Zoom';
 import { FaCheck } from "react-icons/fa";
-
 import ScrollAnimation from "react-animate-on-scroll";
+import "./Contact.css"
 function Contact() {
   const [showTooltip, setShowTooltip] = useState(false);
   const [contactUs, setContactUs] = useState([]);
@@ -64,8 +64,8 @@ function Contact() {
 
           setTimeout(() => {
             document.getElementById("contactDone").style.display = "none";
-          }, 3000);
-        }, 3000);
+          }, 4000);
+        }, 4000);
       })
       .catch((error) => console.log(error));
   }
@@ -112,7 +112,7 @@ function Contact() {
         <ScrollAnimation animateIn="fadeIn" >
           <div className="BigCard">
             <Email>
-              <div style={{ position: "relative", display: 'flex', alignItems: 'center', flexDirection: "column", columnGap: '20px', rowGap: '10px', flexWrap: 'wrap', justifyContent: 'center' }} >
+              <div style={{ display: 'flex', alignItems: 'center', flexDirection: "column", columnGap: '20px', rowGap: '10px', flexWrap: 'wrap', justifyContent: 'center' }} >
                 <span>Or Contact me here!</span>
                 <div className="contactForm">
                   <style>
@@ -176,13 +176,14 @@ function Contact() {
                 Submit
               </button>
             </Email>
+            <div id="contactDone" style={{ display: "none", alignItems: "center", justifyContent: "center", gap: "1rem", flexDirection: "column", marginTop: "1rem" }}>
+              <h1 style={{ color: "green", fontWeight: "bold" }}>I Recevied Your Contact, Thanks</h1>
+              <p>I Hope You A Good Day.</p>
+            </div>
           </div>
+
         </ScrollAnimation>
-        <div id="contactDone" style={{ width: "300px", display: 'none', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', rowGap: '10px', position: "fixed", top: "40%", right: "40%", zIndex: "10", background: "#fff", padding: "1rem", borderRadius: "16px", boxShadow: "5px 10px 10px 5px #eee" }} >
-          <FaCheck style={{ color: "green", fontSize: "3rem", background: "#90EE90", padding: "10px", borderRadius: "50%" }} />
-          <h1>I Recevied Your Contact, Thanks</h1>
-          <p>I Hope You A Good Day.</p>
-        </div>
+
         {/* {
           contactUs.map((item, index) => {
             return (

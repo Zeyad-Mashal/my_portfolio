@@ -1,0 +1,23 @@
+#contactDone {
+  width: "300px";
+  display: "flex";
+  align-items: "center";
+  justify-content: "center";
+  flex-direction: "column";
+  row-gap: "10px";
+  position: "fixed";
+  top: "40%";
+  right: "40%";
+  z-index: "10";
+  background: "#fff";
+  padding: "1rem";
+  border-radius: "16px";
+  box-shadow: "5px 10px 10px 5px #eee";
+}
+
+@media screen and (max-width: 768px) {
+  #contactDone {
+    top: "30%";
+    right: "5%";
+  }
+}
