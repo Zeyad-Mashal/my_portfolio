@@ -1,17 +1,17 @@
 // --------------------------------------- Project List
 export const ProjectList = [
   {
-    img: "/ykte-feature-graphic.png",
-    title: "maro cares",
+    img: "/maro.png",
+    title: "Maro Cares",
     description:
-      "A cross-platform mobile game (in closed testing) where players try to find the missing pieces of a story.",
+      "An ECommerce platform that buys Cosmetics products, with dynamic categories and filter with many and admin dashboard.",
     tech_stack: ["Node.js", "NextJs", "TailwindCSS", "Express.js"],
     github_url: "",
     demo_url: "https://marocares.com/",
   },
   {
     img: "/suwalif.png",
-    title: "suwalif Tea",
+    title: "Suwalif Tea",
     description:
       "An E-commerce website for selling tea and related products with dynamic categories.",
     tech_stack: ["NextJS", "TailwindCSS", "NodeJs", "MongoDB"],
