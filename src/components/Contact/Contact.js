@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { ContactWrapper, Email, ContactForm } from "./ContactElements";
+import React, { useState } from "react";
+import { ContactWrapper, Email } from "./ContactElements";
 import { MdContentCopy } from "react-icons/md";
 import { IconButton, Tooltip } from "@mui/material";
 import Zoom from '@mui/material/Zoom';
-import { FaCheck } from "react-icons/fa";
 import ScrollAnimation from "react-animate-on-scroll";
 import "./Contact.css"
 function Contact() {
@@ -13,6 +12,10 @@ function Contact() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [message, setMessage] = useState("");
+  const [code, setCode] = useState("");
+  const [error, setError] = useState(false);
+  const [showContact, setShowContact] = useState(false);
+  const [showContactUs, setShowContactUs] = useState(false);
   const copyToClipboard = () => {
     navigator.clipboard.writeText("zyadomar112@gmail.com");
     setShowTooltip(true);
@@ -21,20 +24,33 @@ function Contact() {
     }, 700);
   };
 
-  useEffect(() => {
+
+
+  const ShowContact = () => {
     fetch("https://portfolio-backend-steel-zeta.vercel.app/getContact", {
-      method: "GET",
+      method: "POST",
       headers: {
-        "Content-type": "application/json",
+        "Content-Type": "application/json",
       },
+      body: JSON.stringify({ code }),
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
       .then((data) => {
         setContactUs(data);
         console.log(data);
       })
-      .catch((error) => console.log(error));
-  }, []);
+      .catch((error) => {
+        console.error("Fetch error:", error);
+        setError(error); // Ensure setError is called correctly
+      });
+  };
+
+
 
   const addContactAPI = () => {
     const data = {
@@ -184,18 +200,39 @@ function Contact() {
 
         </ScrollAnimation>
 
-        {/* {
-          contactUs.map((item, index) => {
+        {
+          showContact && (
+            <div className="showContactDiv">
+              <input
+                type="password"
+                placeholder="Enter code"
+                value={code}
+                onChange={(e) => setCode(e.target.value)}
+                className="codeInput"
+              />
+              <button className="btn PrimaryBtn btn-shadow" onClick={ShowContact}>GET</button>
+            </div>
+          )
+        }
+
+
+        <button onClick={() => setShowContact(!showContact)} className="getContactBtn">getContact</button>
+        <p>{error}</p>
+        {
+          contactUs?.map((item, index) => {
             return (
-              <div key={index} className="BigCard">
-                <h1>{item.name}</h1>
-                <p>{item.email}</p>
-                <p>{item.phone}</p>
-                <p>{item.message}</p>
+              <div className="contactCardDiv" key={index}>
+                <div className="contactCard">
+                  <h1>{item.name}</h1>
+                  <p>{item.email}</p>
+                  <p>{item.phone}</p>
+                  <p>{item.message}</p>
+                </div>
               </div>
+
             )
           })
-        } */}
+        }
       </div>
     </ContactWrapper>
   );

@@ -14,6 +14,39 @@
   border-radius: "16px";
   box-shadow: "5px 10px 10px 5px #eee";
 }
+.getContactBtn {
+  background-color: transparent;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 999;
+  border: none;
+  outline: none;
+  color: transparent;
+}
+.codeInput {
+  display: flex;
+}
+.showContactDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.contactCardDiv {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* flex-wrap: wrap; */
+}
+.contactCardDiv .contactCard {
+  width: 100%;
+  background-color: #fff;
+  padding: 1rem;
+  border-radius: 16px;
+  box-shadow: 5px 10px 10px 5px #eee;
+  margin: 0.5rem 0;
+}
 
 @media screen and (max-width: 768px) {
   #contactDone {
